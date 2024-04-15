@@ -1,0 +1,201 @@
+/* Fonts */
+@import url('https://fonts.bunny.net/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+/* Variables */
+@import 'variables';
+
+$primary: #1ED760;
+
+/* Bootstrap */
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+$black: #000;
+$selected: #323232;
+
+$custom-colors: (
+    "black": $black,
+    "selected": $selected
+);
+
+
+
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+body {
+    font-family: "Open Sans", sans-serif;
+}
+
+.navi {
+    position: fixed;
+    height: 100%;
+}
+
+.content {
+    margin-left: 280px;
+}
+
+.login {
+
+    .login-wrapper {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f2f2f2;
+    }
+
+    .login-main {
+        background-color: #FFF;
+        margin: 50px;
+        width: 100%;
+        padding: 10px;
+
+    }
+
+    .login-form {
+        i {
+            font-size: 40px;
+            padding: 10px 20px;
+            border: 2px solid #000;
+        }
+    }
+
+    .login-form-content {
+
+    }
+
+    .cover-image {
+        width: 100%;
+        height: auto;
+    }
+}
+
+
+.nav {
+    .nav-link {
+        font-size: 18px;
+
+    }
+    .active {
+        background-color: $selected !important ;
+    }
+
+}
+
+
+input {
+
+    border-radius: 5px;
+    background: rgb(249, 250, 250);
+    border: 1px solid rgb(181, 189, 196);
+    font-size: 16px;
+    height: 40px;
+    line-height: 24px;
+    padding: 7px 8px;
+    color: rgb(8, 9, 10);
+    box-shadow: none;
+    :focus{
+        background-color: #fff;
+        border-color: #3b49df;
+        box-shadow: 1px 1px 0 #3b49df;
+    }
+
+}
+
+button {
+    //background-color: #9cff2e;
+
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    border-radius: 500px;
+    transition-property: background-color,border-color,color,box-shadow,filter;
+    transition-duration: .3s;
+    border: 1px solid transparent;
+    letter-spacing: 2px;
+    min-width: 160px;
+    text-transform: uppercase;
+    white-space: normal;
+    font-weight: 700;
+    text-align: center;
+    padding: 17px 48px;
+    color: #fff;
+    background-color: #1ED760;
+    height: 48px;
+    &:hover{
+        transform: scale(1.04);
+        background-color: #21e065;
+    }
+}
+
+
+.card {
+    cursor: pointer;
+    transition: .2s;
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px
+    }
+    .desc-text {
+        margin: 0;
+    }
+    .main-text {
+        margin: 0;
+    }
+    .bi {
+        font-size: 40px;
+    }
+
+    .trip-info {
+        margin-left: 20px;
+    }
+
+    .connector {
+        position: absolute;
+        top: 15%; /* Adjust vertical position to align with dot */
+        height: 30%; /* Adjust line height */
+        width: 0; /* Remove width to make the connector a vertical line */
+        border-left: 5px dotted #ccc; /* Make the connector a dotted line */
+    }
+
+
+    .connector::before,
+     .connector::after {
+         content: "";
+         position: absolute;
+         width: 12px; /* Adjust dot size */
+         height: 12px; /* Adjust dot size */
+         background-color: #fff; /* Change color as needed */
+         border-radius: 50%; /* Make the dots round */
+        border: 4px solid $primary;
+         top: -5px; /* Position the top dot */
+         left: -9px; /* Adjust horizontal position */
+     }
+
+    .connector::after {
+        top: calc(100% - 5px); /* Position the bottom dot */
+    }
+
+    .user-info {
+        .bi-person-circle {
+            font-size: 25px;
+        }
+        .rating {
+            .bi {
+                font-size: 18px;
+                color: $yellow;
+            }
+            h4 {
+                font-size: 16px;
+            }
+        }
+    }
+
+
+}
