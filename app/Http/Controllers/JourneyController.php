@@ -54,7 +54,8 @@ class JourneyController extends Controller
      */
     public function show(Journey $journey)
     {
-        //
+
+        return view('journeys.show', compact('journey'));
     }
 
     /**

@@ -10,7 +10,7 @@ class Journey extends Model
     use HasFactory;
 
     protected $fillable = ['from', 'to', 'date', 'price', 'user_id'];
-    protected $primaryKey = 'journey_id';
+    protected $primaryKey = 'id';
     protected $keyType = 'string';
 
     public function user()

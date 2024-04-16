@@ -1,41 +1,52 @@
 
+<a href="{{ route('journey.show', $journey->id) }}">
+    <div class="mt-5 border-2 rounded-2xl transition-all hover:shadow-xl w-full">
 
-<div class="card mx-3 w-75 my-3">
-    <div class="h-100 relative">
-        <div class="card-body d-flex justify-content-between">
-            <div class="trip-info relative">
-                <div class="item-text d-flex align-items-center">
-                    <div class="text-data mx-3">
-                        <h6 class="desc-text text-muted">From: </h6>
-                        <h4 class="main-text">{{  $journey->from  }}</h4>
+        <div class="metadata px-5">
+            <div class="rating flex items-center gap-1 p-2">
+                <x-heroicon-s-star class="w-[20px] text-yellow-300" />
+                <x-heroicon-s-star class="w-[20px] text-yellow-300" />
+                <x-heroicon-s-star class="w-[20px] text-yellow-300" />
+                <x-heroicon-s-star class="w-[20px] text-yellow-300" />
+                <x-heroicon-s-star class="w-[20px] text-yellow-300" />
+
+            </div>
+            <div class="flex items-start gap-10">
+                <div class="user-info px-2">
+                    <h1 class="font-black text-xl ">{{ $journey->user->name }}</h1>
+                    <div class="text-muted">
+                        <p class="font-bold">4 places left</p>
                     </div>
                 </div>
-                <span class="connector"></span>
-                <div class="item-text d-flex align-items-center mt-4">
-                    <div class="text-data mx-3">
-                        <h6 class="desc-text text-muted">To: </h6>
-                        <h4 class="main-text"> {{ $journey->to  }}</h4>
-                    </div>
+                <div class="price">
+                    <h1 class="text-3xl font-black">{{ $journey->price }} RSD</h1>
+                    <p class="font-bold">24.04.2024.</p>
                 </div>
             </div>
-            <div class="price-container">
-                <h1>{{ $journey->price  }} RSD</h1>
-            </div>
+
+
+        </div>
+        <div class="timeline flex justify-start rounded-2xl py-3 my-3 mx-2 bg-[#eff1f9]">
+            <ul class="flex w-full px-3 gap-2">
+                <li class="location">
+                    <h1 class="font-bold">{{ $journey->from  }}</h1>
+                    <p class="text-sm text-muted">19:00</p>
+                </li>
+                <li class="stop flex-grow">
+                    <div class="time">
+                        <div class="eta flex justify-center items-center">
+                            <h1 class="bg-accent rounded-2xl px-4 text-white">24h and 60m</h1>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="location">
+                    <h1 class="font-bold">{{ $journey->to  }}</h1>
+                    <p class="text-sm text-muted">20:00</p>
+                </li>
+            </ul>
         </div>
     </div>
-    <hr />
-    <div class="user-info d-flex pb-2 px-4 justify-content-between gap-3">
 
-        <div class="d-flex align-items-center gap-2">
-            <i class="bi bi-person-circle"></i>
-            <h3>{{ $journey->user->name  }}</h3>
-        </div>
-
-        <div class="rating d-flex flex-column align-items-center justify-content-center">
-            <i class="bi bi-star-fill"></i>
-            <h4>{{ $journey->user->rating  }}</h4>
-        </div>
-    </div>
-
-</div>
+</a>
 

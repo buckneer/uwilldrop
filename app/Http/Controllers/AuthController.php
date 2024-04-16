@@ -36,11 +36,12 @@ class AuthController extends Controller
 
     public function login(Request $request) {
         $creds = $request->only('email', 'password');
+
         if(Auth::attempt($creds)) {
             return redirect()->intended('/');
         }
 
-        return redirect('login')->with('error', 'Invalid Credentials');
+        return redirect('login')->with('error', 'Invalid Email or Password');
     }
 
     public function logout(Request $request) {

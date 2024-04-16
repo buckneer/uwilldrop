@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+body {
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+}
+
+
+.dropmenu {
+    @apply bg-accent;
+}
+
+/*.location {*/
+/*    flex: .2;*/
+/*}*/
+
+/*.stop {*/
+/*    flex: 1;*/
+/*    width: 100%;*/
+/*}*/
+
+.eta {
+    position: relative;
+    text-align: center;
+    z-index: 999;
+}
+
+.eta:after{
+    content: "";
+    display: block;
+    height: 2px; /* This will be the thickness of the dotted line */
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    z-index: -1;
+    left: 0;
+    border-style: dashed;
+    @apply border-t-2 border-t-accent
+}
+
+/*.eta:after{*/
+/*    content:"";*/
+/*    display: block;*/
+/*    height: 2px;*/
+/*    width: 100%;*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    z-index: -1;*/
+/*    left: 0;*/
+/*    @apply bg-accent*/
+/*}*/
+
+/*.eta:after{*/
+/*    content:"";*/
+/*    display: block;*/
+/*    height: 2px;*/
+/*    width: 25%;*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    right: 0;*/
+/*    background: red;*/
+/*}*/
+
