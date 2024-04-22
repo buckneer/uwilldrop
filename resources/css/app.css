@@ -45,6 +45,36 @@ body {
     @apply border-t-2 border-t-accent
 }
 
+.autocomplete-items {
+    @apply absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+.autocomplete-items div {
+    @apply cursor-pointer py-2 px-5 bg-white border-b-2 ;
+}
+
+.autocomplete-items div:hover {
+    @apply bg-accent text-white;
+}
+
+.autocomplete-active {
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+}
+
+
+.form-input {
+    @apply w-full border border-[#c4c8ce] rounded;
+}
+
+
 /*.eta:after{*/
 /*    content:"";*/
 /*    display: block;*/

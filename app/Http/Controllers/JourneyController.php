@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Journey;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class JourneyController extends Controller
 {
@@ -30,23 +31,32 @@ class JourneyController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'from' => 'required|string|max:255',
-            'to' => 'required|string|max:255',
-            'date' => 'required|date',
-            'price' => 'nullable|numeric|min:0', // Make price optional and allow null values
-        ]);
 
-        $journey = Journey::create([
-            'from' => $validatedData['from'],
-            'to' => $validatedData['to'],
-            'date' => $validatedData['date'],
-            'price' => $validatedData['price'],
-            'user_id' => auth()->id()
-        ]);
+        // Decode the JSON data from the request
+        $data = json_decode($request->getContent(), true);
 
-        return redirect()->route('journeys.index')
-            ->with('success', 'Journey created successfully.');
+        // Create a new journey instance
+        $journey = new Journey;
+
+//        TODO before sending request, drop DATE!
+
+        // Map the incoming data to the model's fields
+        $journey->from = $data['from']['name'];
+        $journey->to = $data['to']['name'];
+        $journey->from_coordinates = json_encode(['latitude' => $data['from']['lat'], 'longitude' => $data['from']['long']]);
+        $journey->to_coordinates = json_encode(['latitude' => $data['to']['lat'], 'longitude' => $data['to']['long']]);
+        $journey->price = $data['price'];
+        $journey->departure_time = $data['departure_time'];
+        $journey->seats = $data['seats'];
+        $journey->duration = $data['duration'];
+        $journey->user_id = auth()->id(); // Assuming you want to associate the journey with the currently authenticated user
+
+        // Save the journey to the database
+        $journey->save();
+
+        // Return a response
+        return response()->json(['message' => 'Journey created successfully'], 201);
+
     }
 
     /**

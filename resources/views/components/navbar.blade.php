@@ -1,14 +1,3 @@
-
-<?php
-$countries = [
-    [ 'label' => 'Benin',         'value' => 'bj' ],
-    [ 'label' => 'Burkina Faso',  'value' => 'bf' ],
-    [ 'label' => 'Ghana',         'value' => 'gh' ],
-    [ 'label' => 'Nigeria',       'value' => 'ng' ],
-    [ 'label' => 'Kenya',         'value' => 'ke' ]
-];
-
-?>
 <div class="h-[100vh] bg-primary fixed flex flex-col justify-between" style="width: 280px;">
     <div>
         <a href="/" class="flex justify-center items-center my-5 text-white">
@@ -25,7 +14,7 @@ $countries = [
         <div class="wallet bg-accent rounded-2xl p-3 m-3 flex justify-between">
             <div class="">
                 <p class="text-gray-400">Wallet</p>
-                <p class="text-2xl text-white font-bold">$1430.00</p>
+                <p class="text-2xl text-white font-bold">1430.00 RSD</p>
             </div>
 
             <x-heroicon-s-wallet class="w-[30px] text-white bg-accent" />

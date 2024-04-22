@@ -37,7 +37,8 @@ class AuthController extends Controller
     public function login(Request $request) {
         $creds = $request->only('email', 'password');
 
-        if(Auth::attempt($creds)) {
+
+        if(Auth::attempt($creds, $request['remember-me'] == true)) {
             return redirect()->intended('/');
         }
 

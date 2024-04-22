@@ -9,6 +9,7 @@
         "andreiio/blade-remix-icon": "^3.2",
         "blade-ui-kit/blade-heroicons": "^2.3",
         "blade-ui-kit/blade-icons": "^1.6",
+        "guzzlehttp/guzzle": "^7.8",
         "koossaayy/laravel-mapbox": "^0.4.4",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
