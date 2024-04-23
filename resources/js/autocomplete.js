@@ -84,32 +84,6 @@ function autocomplete(inp, coordinates) {
 autocomplete(document.getElementById("from"), fromCoordinates);
 autocomplete(document.getElementById("to"), toCoordinates);
 
-function formatTravelTime(seconds) {
-    let hours = Math.floor(seconds / 3600);
-    let minutes = Math.floor((seconds % 3600) / 60);
-    let timeString = "";
-
-    if (hours > 0) {
-        timeString += hours + " h ";
-    }
-    if (minutes > 0) {
-        timeString += minutes + " m ";
-    }
-
-    return timeString;
-}
-
-function getRouteData(startLng, startLat, endLng, endLat) {
-    let url = `https://api.mapbox.com/directions/v5/mapbox/driving/${startLng}%2C${startLat}%3B${endLng}%2C${endLat}?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=false&access_token=${mapboxAccessToken}`;
-
-    return fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const travelTime = data.routes[0].duration;
-            return formatTravelTime(travelTime);
-        })
-        .catch(error => console.error('Error:', error));
-}
 
 $('#submitBtn').click(function() {
 
@@ -129,24 +103,15 @@ $('#submitBtn').click(function() {
     };
 
 
-    getRouteData(startCoordinates.long, startCoordinates.lat, endCoordinates.long, endCoordinates.lat)
-        .then(travelTime => {
-            // Add travel time to the data object
-            let data = {
-                from: startCoordinates,
-                to: endCoordinates,
-                departure_time: date,
-                seats: seats,
-                price: price,
-                duration: travelTime // Add travel time here
-            };
+    let data = {
+        from: startCoordinates,
+        to: endCoordinates,
+        departure_time: date,
+        seats: seats,
+        price: price,
+    };
 
-            console.log(data);
-
-            // Proceed with AJAX request
-            sendAjaxRequest(data);
-        })
-        .catch(error => console.error('Error fetching travel time:', error));
+    sendAjaxRequest(data);
 
 });
 

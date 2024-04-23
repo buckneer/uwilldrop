@@ -28,6 +28,21 @@ class JourneyController extends Controller
         return view('journeys.create');
     }
 
+    function formatTravelTime($seconds) {
+        $hours = floor($seconds / 3600);
+        $minutes = floor(($seconds % 3600) / 60);
+        $timeString = "";
+
+        if ($hours > 0) {
+            $timeString .= $hours . " h ";
+        }
+        if ($minutes > 0) {
+            $timeString .= $minutes . " m ";
+        }
+
+        return $timeString;
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -42,6 +57,8 @@ class JourneyController extends Controller
             $response = $client->request('GET', $url);
             $res_data = json_decode($response->getBody()->getContents(), true);
             $coordinates = $res_data['routes'][0]['geometry']['coordinates'];
+            $duration = $res_data['routes'][0]['duration'];
+            $fDuration = $this->formatTravelTime($duration);
 
 
             $journey = new Journey;
@@ -53,7 +70,7 @@ class JourneyController extends Controller
             $journey->price = $data['price'];
             $journey->departure_time = $data['departure_time'];
             $journey->seats = $data['seats'];
-            $journey->duration = $data['duration'];
+            $journey->duration = $fDuration;
             $journey->user_id = auth()->id();
             $journey->route_data = json_encode($coordinates);
 

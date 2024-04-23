@@ -94,8 +94,9 @@
             updateButtonState();
 
             $('.journey-item').click(function() {
-                const routeData = $(this).data('route-data');
                 const journey = $(this).data('journey');
+                const routeData = $(this).data('route-data');
+
                 updateMap(routeData);
                 activeJourney = journey;
                 updateButtonState();
