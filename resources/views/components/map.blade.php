@@ -14,23 +14,13 @@
         zoom: 6.3
     });
 
-    function getRouteData(startLng, startLat, endLng, endLat) {
-        let url = `https://api.mapbox.com/directions/v5/mapbox/driving/${startLng}%2C${startLat}%3B${endLng}%2C${endLat}?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=false&access_token=${token}`;
 
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                drawRoute(data);
-            })
-            .catch(error => console.error('Error:', error));
-    }
-
-    function drawRoute(data) {
+    function drawRoute() {
         var routeData = {
             "type": "Feature",
             "geometry": {
                 "type": "LineString",
-                "coordinates": data.routes[0].geometry.coordinates
+                "coordinates": {{ $journey['route_data'] }}
             }
         };
 
@@ -57,5 +47,6 @@
 
         })
     }
-    getRouteData(from[0], from[1], to[0], to[1]);
+
+    drawRoute();
 </script>

@@ -90,10 +90,10 @@ function formatTravelTime(seconds) {
     let timeString = "";
 
     if (hours > 0) {
-        timeString += hours + " h";
+        timeString += hours + " h ";
     }
     if (minutes > 0) {
-        timeString += minutes + " m";
+        timeString += minutes + " m ";
     }
 
     return timeString;
