@@ -22,8 +22,9 @@ class Map extends Component
     {
         $from = json_decode($this->journey->from_coordinates);
         $to = json_decode($this->journey->to_coordinates);
+        $coordinates = json_decode($this->journey['route_data']);
 
         // Ensure the variables are correctly passed to the view
-        return view('components.map', compact('from', 'to'));
+        return view('components.map', compact('from', 'to', 'coordinates'));
     }
 }
