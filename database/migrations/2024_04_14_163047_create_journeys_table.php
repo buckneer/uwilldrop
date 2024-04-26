@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('to');
             $table->date('date');
             $table->decimal('price', 8, 2)->default(0);
-            $table->unsignedBigInteger('user_id'); // Add the user_id column
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
-            $table->foreign('user_id') // Define a foreign key constraint
+            $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
@@ -33,8 +33,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('journeys', function (Blueprint $table) {
-            $table->dropForeign(['user_id']); // Drop the foreign key constraint
-            $table->dropColumn('user_id'); // Drop the user_id column
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
         });
     }
 };

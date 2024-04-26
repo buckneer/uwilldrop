@@ -7,10 +7,9 @@
             <div class="mt-5">
                 <h1 class="text-2xl font-black ms-2">All Journeys</h1>
 
-                <div class="list mr-2 pr-2">
+                <div class="list mr-2 px-2">
                     @foreach($journeys as $journey)
                         <div class="journey-item" data-route-data="{{ $journey->route_data }}" data-journey="{{ $journey->id }}">
-                            <!-- Journey item content -->
                             <x-journey-item :journey="$journey" />
                         </div>
                     @endforeach
@@ -23,6 +22,8 @@
                 Book a ride
             </button>
         </div>
+
+
     </div>
 
     <script>
@@ -103,8 +104,37 @@
             });
 
 
+
             $('#book-ride').click(function () {
-            //     TODO send ajax request to save!
+
+
+                let data = {
+                    journey_id: activeJourney,
+                }
+
+                $.ajax({
+                    url: '/ride/',
+                    method: "POST",
+                    data: JSON.stringify(data),
+                    beforeSend: function(xhr) {
+                        // Show the loader
+                        $('.loader-container').show();
+                        xhr.setRequestHeader("X-CSRF-TOKEN", $('meta[name="csrf-token"]').attr('content'));
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+                    },
+                    complete: function() {
+                        // Hide the loader
+                        $('.loader-container').hide();
+                    },
+                    success: function(data) {
+                        // Handle success
+                        console.log(data);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Handle error
+                        console.error(textStatus, errorThrown);
+                    }
+                });
             })
         });
     </script>

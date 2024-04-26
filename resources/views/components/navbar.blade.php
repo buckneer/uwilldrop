@@ -33,6 +33,12 @@
                     Journeys
                 </a>
             </li>
+            <li class="flex items-center px-5 py-3 gap-3 mx-3 mt-4 rounded-2xl text-muted text-lg transition-all hover:bg-accent {{ Route::is(['ride.index', 'journey.show']) ? 'bg-accent' : '' }}" >
+                <x-phosphor-path-bold class="w-[20px] text-white" />
+                <a href="{{ route("ride.index") }}" class="nav-link text-white" aria-current="page">
+                    Rides
+                </a>
+            </li>
             <li class="flex items-center px-5 py-3 gap-3 mx-3 my-4 mt-4 rounded-2xl text-muted text-lg transition-all hover:bg-accent">
                 <x-heroicon-s-cog-8-tooth class="w-[20px] text-white" />
                 <a href="#" class="nav-link text-white">

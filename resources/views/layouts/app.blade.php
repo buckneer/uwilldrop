@@ -27,7 +27,56 @@
 
 </head>
 <body>
-    <div class="main-container h-100 flex ">
+    <div class="main-container h-100 flex relative">
+        <div class="loader-container" style="display: none;">
+            <div class="loader"></div>
+        </div>
+
+        <div id="ratingModal" class="absolute w-screen h-screen flex backdrop-blur justify-center items-center z-[1000] hidden transition-all">
+            <div class="bg-white border-2 w-1/2 rounded-2xl">
+                <div class="close-icon flex justify-end text-muted p-2">
+                    <x-ri-close-circle-fill id="closeModal" data-dismiss="modal" class="close w-[25px] cursor-pointer active:text-black transition-all" />
+                </div>
+                <div class="heading flex justify-center items-center flex-col gap-5">
+                    <h1 class="text-2xl font-black">Rate Your Driver!</h1>
+                    <div class="text-muted">Would you like to rate your experience?</div>
+                </div>
+                <div class="rating w-1/2 mx-auto my-5">
+                    <div id="voteFace" class="grid grid-cols-5 gap-3">
+                        <div class="flex justify-center text-red-600 transition-all">
+                            <i class="far fa-dizzy fa-3x icon cursor-pointer transition-all hover:scale-110" data-rating="1"></i>
+                        </div>
+                        <div class="flex justify-center text-orange-600 transition-all">
+                            <i class="far fa-frown fa-3x icon cursor-pointer transition-all hover:scale-110" data-rating="2"></i>
+                        </div>
+
+                        <div class="flex justify-center text-yellow-600 transition-all">
+                            <i class="far fa-meh fa-3x icon cursor-pointer transition-all hover:scale-110" data-rating="3"></i>
+                        </div>
+                        <div class="flex justify-center text-green-500 transition-all">
+                            <i class="far fa-smile fa-3x icon cursor-pointer transition-all hover:scale-110" data-rating="4"></i>
+                        </div>
+                        <div class="flex justify-center text-green-600 transition-all">
+                            <i class="far fa-laugh fa-3x icon cursor-pointer transition-all hover:scale-110" data-rating="5"></i>
+                        </div>
+                    </div>
+                </div>
+                <form class="w-1/2 mx-auto" method="POST" action="{{ route("ride.rating") }}">
+                    @csrf
+                    <input id="rating" type="hidden" value="" name="rating" />
+                    <input id="ride_id" type="hidden" value="" name="ride_id" />
+                    <textarea name="comment" class="border-2 resize-none w-full rounded-2xl p-2 border-[#aeb3bb]" rows="5" placeholder="Write additional comments here"></textarea>
+
+                    <div class="btn-container flex justify-center">
+                        <button class="bg-accent rounded-2xl px-10 py-3 mt-2 mb-5 text-white shadow-lg hover:shadow-none transition-all hover:bg-gray-700 active:scale-90">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
         @include('components.navbar')
         <div class="ml-[280px] w-full">
             @yield('content')

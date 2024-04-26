@@ -9,12 +9,14 @@
         "andreiio/blade-remix-icon": "^3.2",
         "blade-ui-kit/blade-heroicons": "^2.3",
         "blade-ui-kit/blade-icons": "^1.6",
+        "codeat3/blade-phosphor-icons": "^2.2",
         "guzzlehttp/guzzle": "^7.8",
         "koossaayy/laravel-mapbox": "^0.4.4",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.5",
-        "mkocansey/bladewind": "^2.5"
+        "mkocansey/bladewind": "^2.5",
+        "owenvoke/blade-fontawesome": "^2.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

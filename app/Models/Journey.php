@@ -13,9 +13,9 @@ class Journey extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'string';
 
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
 }
