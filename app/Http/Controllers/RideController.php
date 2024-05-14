@@ -112,7 +112,6 @@ class RideController extends Controller
             $ride->save();
             return redirect('ride')->with(['success' => 'Ride marked as done']);
         } catch (Exception $e) {
-            dd($e->getMessage());
             return redirect('ride')->with(['error' => $e->getMessage()]);
         }
 
@@ -149,8 +148,16 @@ class RideController extends Controller
             $ride->save();
             return redirect('ride')->with(['success' => 'Ride rated']);
         } catch (Exception $e) {
-            dd($e->getMessage());
             return redirect('ride')->with(['error' => $e->getMessage()]);
         }
+    }
+
+    public function displayByUser(Request $request)
+    {
+        $user = Auth::user()->id;
+        $rides = Ride::where('user_id', $user)
+            ->where('driver_done', false)->get();
+
+        return view('ride.user', compact('rides'));
     }
 }

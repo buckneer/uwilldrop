@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Journey;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Client;
 
@@ -96,8 +97,7 @@ class JourneyController extends Controller
      */
     public function show(Journey $journey)
     {
-
-        return view('journeys.show', compact('journey'));
+        //
     }
 
     /**
@@ -123,4 +123,5 @@ class JourneyController extends Controller
     {
         //
     }
+
 }

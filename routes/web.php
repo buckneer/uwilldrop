@@ -19,9 +19,11 @@ Route::get('/journey', function() {
 })->middleware(['auth'])->name('journey');
 
 // JOURNEY
+
 Route::resource('journey', JourneyController::class)->middleware('auth');
 
 // RIDE
+Route::get('/ride/active', [RideController::class, 'displayByUser'])->middleware(['auth'])->name('ride.display-by-user');
 Route::post('/ride/user', [RideController::class, 'doneUser'])->middleware('auth')->name('ride.user');
 Route::post('/ride/driver', [RideController::class, 'doneDriver'])->middleware('auth')->name('ride.driver');
 Route::post('/ride/rating', [RideController::class, 'addRating'])->middleware('auth')->name('ride.rating');
