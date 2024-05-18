@@ -8,7 +8,6 @@
         <div class="ms-5 flex-1 flex flex-col ">
             <div class="mt-5">
                 <h1 class="text-2xl font-black ms-2">Active rides</h1>
-
                 <div class="list mr-2 px-2">
                     @foreach($upcoming_rides as $ride)
                         <x-ride-item :ride="$ride" />

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Journey;
 use App\Models\Ride;
+use App\Models\Transaction;
+use App\Models\User;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -42,6 +44,23 @@ class RideController extends Controller
         try {
             $journey = Journey::find($data['journey_id']);
 
+            $user = Auth::user();
+            $transaction = new Transaction;
+
+
+            if($user->wallet < $journey->price) {
+                return redirect('journey')->with(['error', 'not enough money']);
+            }
+
+            $currWallet = $user->wallet;
+            $user->wallet = $currWallet - $journey->price;
+            $transaction->type = 0;
+            $transaction->amount = $journey->price;
+            $transaction->card_id = null;
+            $transaction->user_id = $user->id;
+            $transaction->wallet = true;
+
+
             $ride = new Ride;
 
             $ride->user_id = auth()->id();
@@ -55,6 +74,8 @@ class RideController extends Controller
 
             $journey->used_seats += 1;
             $journey->save();
+            $user->save();
+            $transaction->save();
 
             return response()->json(['message' => 'Journey created successfully'], 201);
         } catch (QueryException $e) {
@@ -146,7 +167,73 @@ class RideController extends Controller
             $ride->comment = $request['comment'];
 
             $ride->save();
+
+            $this->updateDriverRating($request);
+
             return redirect('ride')->with(['success' => 'Ride rated']);
+        } catch (Exception $e) {
+            return redirect('ride')->with(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function addUserRating(Request $request) {
+        try {
+            $ride = Ride::where('id', $request['ride_id'])->firstOrFail();
+
+            if($ride->rider_id != auth()->id()) {
+                return redirect('ride')->with(['errors' => 'You are not allowed to add a rating for this ride']);
+            }
+
+            $ride->driver_done = true;
+            $ride->user_rating = $request['rating'];
+            $ride->user_comment = $request['comment'];
+
+            $ride->save();
+
+            $this->updateUserRating($request);
+            return redirect('ride/active')->with(['success' => 'Ride rated']);
+        } catch (Exception $e) {
+            return redirect('ride')->with(['errors' => $e->getMessage()]);
+        }
+    }
+
+    public function updateDriverRating(Request $request) {
+        try {
+
+            $ride = Ride::where('id', $request['ride_id'])->firstOrFail();
+            $user_id = $ride->journey->user_id;
+
+            $rides = Ride::whereHas('journey', function ($query) use ($user_id) {
+                $query->where('user_id', $user_id);
+            })->get();
+
+            $averageRating = $rides->avg('rating');
+
+            $user = User::findOrFail($user_id);
+            $user->rating = $averageRating;
+            $user->save();
+
+        } catch (Exception $e) {
+            return redirect('ride')->with(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function updateUserRating(Request $request) {
+        try {
+
+            $ride = Ride::where('id', $request['ride_id'])->firstOrFail();
+            $user_id = $ride->journey->user_id;
+
+            $rides = Ride::whereHas('journey', function ($query) use ($user_id) {
+                $query->where('user_id', $user_id);
+            })->get();
+
+            $averageRating = $rides->avg('user_rating');
+
+            $user = User::findOrFail($user_id);
+            $user->user_rating = $averageRating;
+            $user->save();
+
         } catch (Exception $e) {
             return redirect('ride')->with(['error' => $e->getMessage()]);
         }
@@ -154,10 +241,12 @@ class RideController extends Controller
 
     public function displayByUser(Request $request)
     {
-        $user = Auth::user()->id;
-        $rides = Ride::where('user_id', $user)
-            ->where('driver_done', false)->get();
+        $user = auth()->id();
+        $rides = Ride::where('rider_id', $user)
+            ->where('driver_done', false)->paginate(2, '*', 'rides')->withQueryString();
 
-        return view('ride.user', compact('rides'));
+        $journeys = Journey::where('user_id', $user)->paginate(2, '*', 'journeys')->withQueryString();
+
+        return view('ride.user', compact('rides', 'journeys'));
     }
 }

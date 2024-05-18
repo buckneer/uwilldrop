@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function journeys()
+    {
+        return $this->hasMany(Journey::class);
+    }
 }

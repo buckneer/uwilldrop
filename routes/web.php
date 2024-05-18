@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BillingController;
 use App\Http\Controllers\JourneyController;
 use App\Http\Controllers\RideController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +29,16 @@ Route::get('/ride/active', [RideController::class, 'displayByUser'])->middleware
 Route::post('/ride/user', [RideController::class, 'doneUser'])->middleware('auth')->name('ride.user');
 Route::post('/ride/driver', [RideController::class, 'doneDriver'])->middleware('auth')->name('ride.driver');
 Route::post('/ride/rating', [RideController::class, 'addRating'])->middleware('auth')->name('ride.rating');
+Route::post('/ride/user/rating', [RideController::class, 'addUserRating'])->middleware('auth')->name('ride.user-rating');
 Route::resource('ride', RideController::class)->middleware('auth');
+
+
+// BILLING
+Route::post('/billing/add', [BillingController::class, 'addFunds'])->middleware('auth')->name('billing.add');
+Route::resource('billing', BillingController::class)->middleware('auth');
+
+// TRANSACTION
+Route::resource('transaction', TransactionController::class)->middleware('auth');
 
 
 // AUTH

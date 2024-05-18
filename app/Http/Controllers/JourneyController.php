@@ -16,7 +16,15 @@ class JourneyController extends Controller
      */
     public function index()
     {
-        $journeys = Journey::all();
+//        $journeys = Journey::whereRaw('seats - used_seats != 0')->where('user_id', auth()->id())->get();
+        $userId = Auth::id();
+        $journeys = Journey::where('user_id', '!=', $userId)
+            ->whereRaw('NOT EXISTS (
+                    SELECT 1 FROM rides AS r
+                    WHERE r.journey_id = journeys.id AND r.user_id =?
+                  )', [$userId])
+            ->whereRaw('seats - used_seats > 0')
+            ->get();
         return view('journeys.index', compact('journeys'));
     }
 

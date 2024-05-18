@@ -6,7 +6,7 @@
 
         <a href="#" class="cursor-pointer bg-accent rounded-2xl text-white p-3 m-3 flex justify-between w-100 items-center">
             <div class="flex gap-3 items-center">
-                <x-heroicon-s-user-circle class="text-white w-[30px] " />
+                <x-user-profile-icon :rating="Auth::user()->rating" />
                 <div><strong>{{ Auth::user()->name }}</strong></div>
             </div>
         </a>
@@ -14,7 +14,7 @@
         <div class="wallet bg-accent rounded-2xl p-3 m-3 flex justify-between">
             <div class="">
                 <p class="text-gray-400">Wallet</p>
-                <p class="text-2xl text-white font-bold">1430.00 RSD</p>
+                <p class="text-2xl text-white font-bold">{{ Auth::user()->wallet }} RSD</p>
             </div>
 
             <x-heroicon-s-wallet class="w-[30px] text-white bg-accent" />
@@ -39,15 +39,15 @@
                     Rides
                 </a>
             </li>
-            <li class="flex items-center px-5 py-3 gap-3 mx-3 my-4 mt-4 rounded-2xl text-muted text-lg transition-all hover:bg-accent">
+            <li class="flex items-center px-5 py-3 gap-3 mx-3 mt-4 rounded-2xl text-muted text-lg transition-all hover:bg-accent {{ Route::is(['ride.display-by-user']) ? 'bg-accent' : '' }}">
                 <x-heroicon-s-cog-8-tooth class="w-[20px] text-white" />
                 <a href="{{ route('ride.display-by-user') }}" class="nav-link text-white">
                     Management
                 </a>
             </li>
-            <li class="flex items-center px-5 py-3 gap-3 mx-3 my-4 mt-4 rounded-2xl text-muted text-lg transition-all hover:bg-accent">
+            <li class="flex items-center px-5 py-3 gap-3 mx-3 my-4 mt-4 rounded-2xl text-muted text-lg transition-all hover:bg-accent {{ Route::is(['billing.index', 'billing.create']) ? 'bg-accent' : '' }} ">
                 <x-heroicon-s-credit-card class="w-[20px] text-white " />
-                <a href="#" class="nav-link text-white">
+                <a href="{{ route('billing.index') }}" class="nav-link text-white">
                     Billing
                 </a>
             </li>
