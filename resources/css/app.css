@@ -83,27 +83,53 @@ body {
     transform: rotateY(-180deg);
 }
 
+@keyframes fadeInOut {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-/*.eta:after{*/
-/*    content:"";*/
-/*    display: block;*/
-/*    height: 2px;*/
-/*    width: 100%;*/
-/*    position: absolute;*/
-/*    top: 50%;*/
-/*    z-index: -1;*/
-/*    left: 0;*/
-/*    @apply bg-accent*/
-/*}*/
+.toast-animation {
+    animation-name: fadeInOut;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
 
-/*.eta:after{*/
-/*    content:"";*/
-/*    display: block;*/
-/*    height: 2px;*/
-/*    width: 25%;*/
-/*    position: absolute;*/
-/*    top: 50%;*/
-/*    right: 0;*/
-/*    background: red;*/
-/*}*/
+#search_container {
+    position:relative; /* IMPORTANT */
+}
+
+#search_{
+    border:0; /* HAS TO BE SIMILAR TO #autocomplete */
+    font-size:14px; /* HAS TO BE SIMILAR TO #autocomplete */
+    padding:10px; /* IMPORTANT */
+
+    /* FOR DESIGN PURPOSE */
+    outline:0;
+    color: #f8fafd;
+    width: 100%;
+    border-bottom:1px solid rgba(255,255,255,0.3);
+    background-color: rgba(0,0,0,0);
+    font-family: 'Inconsolata', monospace;
+    /* ================== */
+}
+
+#search_::placeholder {
+    color: #f8fafd; /* FOR DESIGN PURPOSE */
+}
+
+#autocomplete {
+    position: absolute; /* IMPORTANT */
+    z-index: -1; /* IMPORTANT */
+    border:0; /* HAS TO BE SIMILAR TO #search_ */
+    font-size:14px; /* HAS TO BE SIMILAR TO #search_ */
+    left: 10px; /* ACCORDING TO THE LEFT-PADDING OF #search_ */
+    top:10px; /* ACCORDING TO THE TOP-PADDING OF #search_ */
+
+    /* FOR DESIGN PURPOSE */
+    background-color: rgba(0,0,0,0);
+    font-family: 'Inconsolata', monospace;
+    color: rgba(248,250,253,0.4);
+    width: 100%;
+    /* ================== */
+}
 

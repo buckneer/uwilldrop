@@ -43,7 +43,7 @@
     </div>
     <div class="flex justify-center mx-2 my-2">
 
-        <button id="showModal" class="flex gap-2 border-2 border-green-700 text-green-700 p-2 rounded-2xl  justify-center hover:bg-green-700 hover:text-white transition-all cursor-pointer w-full">
+        <button class="showUserModal flex gap-2 border-2 border-green-700 text-green-700 p-2 rounded-2xl  justify-center hover:bg-green-700 hover:text-white transition-all cursor-pointer w-full">
             <x-heroicon-s-check class="w-[25px]" />
             <p class="font-black">Mark as done</p>
         </button>
@@ -52,12 +52,9 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#showModal").click(function(){
+            $(".showUserModal").click(function(){
                 $("#userModal").removeClass('hidden');
                 $("#ride_id").val({{ $ride->id }})
-
-                //     TODO class ajax;
-
             });
 
             $("#closeModal").click(function () {

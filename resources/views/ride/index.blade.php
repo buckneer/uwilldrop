@@ -4,8 +4,8 @@
 
 
 @section('content')
-    <div class="flex w-full gap-10">
-        <div class="ms-5 flex-1 flex flex-col ">
+    <div class="flex w-full gap-10 h-screen">
+        <div class="ms-5 flex-1 flex flex-col justify-between pb-5 ">
             <div class="mt-5">
                 <h1 class="text-2xl font-black ms-2">Active rides</h1>
                 <div class="list mr-2 px-2">
@@ -22,15 +22,19 @@
                     @endif
                 </div>
             </div>
+            <div class="">
+                {{ $upcoming_rides->links() }}
+            </div>
         </div>
-        <div class="mt-5 flex-1">
-{{--            <h1 class="text-2xl font-black ms-2">To Rate</h1>--}}
 
-{{--            <div class="list mr-2 px-2">--}}
-{{--                @foreach($rate_rides as $ride)--}}
-{{--                    <x-rating-item :ride="$ride" />--}}
-{{--                @endforeach--}}
-{{--            </div>--}}
+        @if(session('error'))
+            <x-toast-notification type="error" message="{{ session('error') }}" />
+        @elseif(session('success'))
+            <x-toast-notification type="success" message="{{ session('success') }}" />
+        @endif
+
+        <div class="mt-5 flex-1">
+
         </div>
 
 

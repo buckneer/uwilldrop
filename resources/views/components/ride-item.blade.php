@@ -41,7 +41,7 @@
     </div>
     <div class="flex justify-center mx-2 my-2">
 
-        <button id="showModal" class="flex gap-2 border-2 border-green-700 text-green-700 p-2 rounded-2xl  justify-center hover:bg-green-700 hover:text-white transition-all cursor-pointer w-full">
+        <button class="showModal flex gap-2 border-2 border-green-700 text-green-700 p-2 rounded-2xl  justify-center hover:bg-green-700 hover:text-white transition-all cursor-pointer w-full">
             <x-heroicon-s-check class="w-[25px]" />
             <p class="font-black">Mark as done</p>
         </button>
@@ -50,17 +50,15 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#showModal").click(function(){
+            $(".showModal").click(function(){
                 $("#ratingModal").removeClass('hidden');
-                $("#ride_id").val({{ $ride->id }})
-
-            //     TODO class ajax;
-
+                $("#driverRideId").val({{ $ride->id }})
             });
 
-            $("#closeModal").click(function () {
+            $("#ratingCloseModal").click(function () {
+
                 $("#ratingModal").addClass('hidden');
-                $("#ride_id").val("");
+                $("#driverRideId").val("");
             })
 
             let link = $('.icon');
@@ -70,7 +68,7 @@
                 $(this).addClass('fas');
 
                 ratingValue = $(this).data('rating');
-                $('input#rating').val(ratingValue);
+                $('input#driverRating').val(ratingValue);
                 console.log(ratingValue);
             });
         });

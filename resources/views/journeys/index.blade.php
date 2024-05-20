@@ -26,11 +26,13 @@
 
     </div>
 
+
     <script>
 
         let activeJourney = null; // Initialize activeJourney as null
 
         $(document).ready(function() {
+
             mapboxgl.accessToken = '{{ env("MAPBOX_TOKEN") }}';
             const map = new mapboxgl.Map({
                 container: 'map',
@@ -126,13 +128,28 @@
                         // Hide the loader
                         $('.loader-container').hide();
                     },
-                    success: function(data) {
+                    success: function(response) {
                         // Handle success
-                        console.log(data);
+                        console.log(response);
+
+                        // Check if the success message exists and update the notification
+                        if (response.success) {
+                            showNotification('success', response.success.message);
+                            // $('#success p').text(response.success.message);
+                            // $('#success').fadeIn().delay(10000).fadeOut(); // Show the success notification, wait 10 seconds, then fade out
+                        } else if (response.error) {
+                            console.log(response.error.message);
+                            showNotification('error', response.error.message);
+                            // $('#error p').text(response.error.message);
+                            // $('#error').fadeIn().delay(10000).fadeOut();
+                        }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         // Handle error
                         console.error(textStatus, errorThrown);
+
+                        // Check if the error message exists and update the notification
+                        showNotification('error', jqXHR.responseJSON.message || 'An unknown error occurred');
                     }
                 });
             })

@@ -107,6 +107,8 @@
                                                 <td class="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
                                                     @if($t->type == 1)
                                                         <div class="inline-flex items-center rounded-full bg-blue-600 py-2 px-3 text-xs text-white">Added</div>
+                                                    @elseif($t->type == 2)
+                                                        <div class="inline-flex items-center rounded-full bg-green-200 py-2 px-3 text-xs text-green-500 font-bold">Ride!</div>
                                                     @else
                                                         <div class="inline-flex items-center rounded-full bg-red-200 py-1 px-2 text-red-500">Removed</div>
                                                     @endif

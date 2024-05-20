@@ -17,6 +17,7 @@ class JourneyController extends Controller
     public function index()
     {
 //        $journeys = Journey::whereRaw('seats - used_seats != 0')->where('user_id', auth()->id())->get();
+
         $userId = Auth::id();
         $journeys = Journey::where('user_id', '!=', $userId)
             ->whereRaw('NOT EXISTS (
@@ -24,6 +25,28 @@ class JourneyController extends Controller
                     WHERE r.journey_id = journeys.id AND r.user_id =?
                   )', [$userId])
             ->whereRaw('seats - used_seats > 0')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('journeys.index', compact('journeys'));
+    }
+
+    public function filter(Request $request) {
+
+        $from = $request->from;
+        $to = $request->to;
+
+
+
+        $userId = Auth::id();
+        $journeys = Journey::where('user_id', '!=', $userId)
+            ->whereRaw('NOT EXISTS (
+                    SELECT 1 FROM rides AS r
+                    WHERE r.journey_id = journeys.id AND r.user_id =?
+                  )', [$userId])
+            ->whereRaw('seats - used_seats > 0')
+            ->where('from', $from)
+            ->where('to', $to)
+            ->orderBy('created_at', 'desc')
             ->get();
         return view('journeys.index', compact('journeys'));
     }
@@ -52,6 +75,23 @@ class JourneyController extends Controller
         return $timeString;
     }
 
+    public function route(Request $request) {
+        try {
+            $data = json_decode($request->getContent(), true);
+
+            $token = env('MAPBOX_TOKEN');
+            $url = "https://api.mapbox.com/directions/v5/mapbox/driving/{$data['from']['longitude']}%2C{$data['from']['latitude']}%3B{$data['to']['longitude']}%2C{$data['to']['latitude']}?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=false&access_token={$token}";
+            $client = new Client();
+
+            $response = $client->request('GET', $url);
+            $res_data = json_decode($response->getBody()->getContents(), true);
+            $coordinates = $res_data['routes'][0]['geometry']['coordinates'];
+            return response()->json($coordinates);
+        } catch (GuzzleException $e) {
+            return response()->json(['Guzzle Message' => $e->getMessage()], 500);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -59,7 +99,7 @@ class JourneyController extends Controller
     {
         $data = json_decode($request->getContent(), true);
         $token = env('MAPBOX_TOKEN');
-
+// TODO        USE THIS TO GENERATE ROUTE
         $url = "https://api.mapbox.com/directions/v5/mapbox/driving/{$data['from']['long']}%2C{$data['from']['lat']}%3B{$data['to']['long']}%2C{$data['to']['lat']}?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=false&access_token={$token}";
         $client = new Client();
         try {
@@ -85,7 +125,7 @@ class JourneyController extends Controller
 
             $journey->save();
 
-            return response()->json(['message' => 'Journey created successfully'], 201);
+            return response()->json(['message' => 'Journey created successfully']);
 
 
         } catch (\Exception $e) {
@@ -98,6 +138,20 @@ class JourneyController extends Controller
             return response()->json(['Guzzle Message' => $e->getMessage()], 500);
         }
 
+    }
+
+    public function search(Request $request) {
+        return view("journeys.search");
+    }
+
+    public function autocompleteFrom(Request $request) {
+        $query = $request->input('from');
+//        $results = Journey::where('from', 'LIKE', "%{$query}%")->take(10)->get();
+        $data = Journey::where('from', 'LIKE', '%'. $request->get('query'). '%')
+            ->take(10)
+            ->get();
+
+        return response()->json($data);
     }
 
     /**

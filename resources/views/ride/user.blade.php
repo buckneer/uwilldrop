@@ -37,6 +37,12 @@
                 </div>
             </div>
         </div>
+
+        @if(session('error'))
+            <x-toast-notification type="error" message="{{ session('error') }}" />
+        @elseif(session('success'))
+            <x-toast-notification type="success" message="{{ session('success') }}" />
+        @endif
     </div>
 @endsection
 

@@ -22,6 +22,10 @@ Route::get('/journey', function() {
 
 // JOURNEY
 
+Route::get('journey/search', [JourneyController::class, 'search'])->name('journey.search');
+Route::get('journey/search/from', [JourneyController::class, 'autocompleteFrom'])->name('journey.autocompleteFrom');
+Route::post('journey/route', [JourneyController::class, 'route'])->name('journey.route');
+Route::get('journey/search/results', [JourneyController::class, 'filter'])->name('journey.filter');
 Route::resource('journey', JourneyController::class)->middleware('auth');
 
 // RIDE

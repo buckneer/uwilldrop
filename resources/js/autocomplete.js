@@ -129,9 +129,14 @@ function sendAjaxRequest(data) {
         data: JSON.stringify(data),
         success: function(response) {
             console.log(response);
+            showNotification('success', response.message);
         },
-        error: function(error) {
-            console.error(error);
+        error: function(jqXHR, textStatus, errorThrown) {
+            // Handle error
+            console.error(textStatus, errorThrown);
+
+            // Check if the error message exists and update the notification
+            showNotification('error', jqXHR.responseJSON.message || 'An unknown error occurred');
         }
     });
 }

@@ -19,9 +19,8 @@ class RideController extends Controller
     public function index()
     {
         $user_id = Auth::user()->id;
-        $upcoming_rides = Ride::where('user_id', $user_id)->where('user_done', false)->get();
-        $rate_rides = Ride::where([['user_id', $user_id], ['user_done', true]], ['rating', "==", 0.0])->get();
-        return view('ride.index', compact('upcoming_rides', 'rate_rides'));
+        $upcoming_rides = Ride::where('user_id', $user_id)->where('user_done', false)->orderBy('created_at', 'DESC')->simplePaginate(2);
+        return view('ride.index', compact('upcoming_rides'));
     }
 
     /**
@@ -46,11 +45,20 @@ class RideController extends Controller
 
             $user = Auth::user();
             $transaction = new Transaction;
+            $driverTransaction = new Transaction;
+            $driver = $journey->user;
 
 
             if($user->wallet < $journey->price) {
-                return redirect('journey')->with(['error', 'not enough money']);
+                return response()->json(['error' => ['message' => 'Not enough money']]);
             }
+
+            $driver->wallet += $journey->price;
+            $driverTransaction->type = 2;
+            $driverTransaction->amount = $journey->price;
+            $driverTransaction->wallet = true;
+            $driverTransaction->user_id = $driver->id;
+
 
             $currWallet = $user->wallet;
             $user->wallet = $currWallet - $journey->price;
@@ -69,18 +77,19 @@ class RideController extends Controller
 
 
             $ride->save();
-
             $journey = Journey::find($data['journey_id']);
 
             $journey->used_seats += 1;
             $journey->save();
             $user->save();
             $transaction->save();
+            $driver->save();
+            $driverTransaction->save();
 
-            return response()->json(['message' => 'Journey created successfully'], 201);
+            return response()->json(['success' => ['message' => 'Ride Booked!']]);
         } catch (QueryException $e) {
             echo 'Error: ' . $e->getMessage();
-            return response()->json(['message' => $e->getMessage()], 500);
+            return response()->json(['error' => "Couldn't book journey"]);
         }
 
 
@@ -243,9 +252,9 @@ class RideController extends Controller
     {
         $user = auth()->id();
         $rides = Ride::where('rider_id', $user)
-            ->where('driver_done', false)->paginate(2, '*', 'rides')->withQueryString();
+            ->where('driver_done', false)->simplePaginate(2, '*', 'rides')->withQueryString();
 
-        $journeys = Journey::where('user_id', $user)->paginate(2, '*', 'journeys')->withQueryString();
+        $journeys = Journey::where('user_id', $user)->simplePaginate(2, '*', 'journeys')->withQueryString();
 
         return view('ride.user', compact('rides', 'journeys'));
     }

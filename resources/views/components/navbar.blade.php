@@ -27,9 +27,9 @@
                     New Journey
                 </a>
             </li>
-            <li class="flex items-center px-5 py-3 gap-3 mx-3 mt-4 rounded-2xl text-muted text-lg transition-all hover:bg-accent {{ Route::is(['journey.index', 'journey.show']) ? 'bg-accent' : '' }}" >
+            <li class="flex items-center px-5 py-3 gap-3 mx-3 mt-4 rounded-2xl text-muted text-lg transition-all hover:bg-accent {{ Route::is(['journey.index', 'journey.show', 'journey.search', 'journey.filter']) ? 'bg-accent' : '' }}" >
                 <x-heroicon-s-map-pin class="w-[20px] text-white" />
-                <a href="{{ route("journey.index") }}" class="nav-link text-white" aria-current="page">
+                <a href="{{ route("journey.search") }}" class="nav-link text-white" aria-current="page">
                     Journeys
                 </a>
             </li>
