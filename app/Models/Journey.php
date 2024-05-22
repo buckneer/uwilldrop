@@ -18,4 +18,14 @@ class Journey extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function rides()
+    {
+        return $this->hasMany(Ride::class);
+    }
+
+    public function route()
+    {
+        return $this->hasOne(Route::class);
+    }
 }

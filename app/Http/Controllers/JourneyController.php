@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Journey;
+use App\Models\Route;
+use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,8 +37,6 @@ class JourneyController extends Controller
         $from = $request->from;
         $to = $request->to;
 
-
-
         $userId = Auth::id();
         $journeys = Journey::where('user_id', '!=', $userId)
             ->whereRaw('NOT EXISTS (
@@ -46,6 +46,7 @@ class JourneyController extends Controller
             ->whereRaw('seats - used_seats > 0')
             ->where('from', $from)
             ->where('to', $to)
+            ->whereDate("departure_time", '>=', Carbon::today()->toDateString())
             ->orderBy('created_at', 'desc')
             ->get();
         return view('journeys.index', compact('journeys'));
@@ -56,8 +57,9 @@ class JourneyController extends Controller
      */
     public function create(Request $request)
     {
-
-        return view('journeys.create');
+        $userId = Auth::id();
+        $routes = Route::where('user_id', $userId)->orderBy("created_at", "DESC")->paginate(3);
+        return view('journeys.create', compact('routes'));
     }
 
     function formatTravelTime($seconds) {
@@ -99,7 +101,7 @@ class JourneyController extends Controller
     {
         $data = json_decode($request->getContent(), true);
         $token = env('MAPBOX_TOKEN');
-// TODO        USE THIS TO GENERATE ROUTE
+
         $url = "https://api.mapbox.com/directions/v5/mapbox/driving/{$data['from']['long']}%2C{$data['from']['lat']}%3B{$data['to']['long']}%2C{$data['to']['lat']}?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=false&access_token={$token}";
         $client = new Client();
         try {
@@ -108,7 +110,7 @@ class JourneyController extends Controller
             $coordinates = $res_data['routes'][0]['geometry']['coordinates'];
             $duration = $res_data['routes'][0]['duration'];
             $fDuration = $this->formatTravelTime($duration);
-
+            $user_id = auth()->id();
 
             $journey = new Journey;
 
@@ -120,10 +122,19 @@ class JourneyController extends Controller
             $journey->departure_time = $data['departure_time'];
             $journey->seats = $data['seats'];
             $journey->duration = $fDuration;
-            $journey->user_id = auth()->id();
+            $journey->user_id = $user_id;
             $journey->route_data = json_encode($coordinates);
 
             $journey->save();
+
+            if($data['template']) {
+                $route = new Route;
+                $route->user_id = $user_id;
+                error_log($journey->id);
+                $route->journey_id = $journey->id;
+                $route->save();
+            }
+
 
             return response()->json(['message' => 'Journey created successfully']);
 

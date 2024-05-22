@@ -6,6 +6,13 @@
         <div class="ms-5 flex flex-col h-screen overflow-y-scroll">
             <div class="mt-5">
                 <h1 class="text-2xl font-black ms-2">All Journeys</h1>
+                @if($journeys->empty())
+                    <div class="flex flex-col ms-2 mt-5 justify-center items-start">
+                        <h1 class="text-2xl">No Journeys for that location</h1>
+                        <a class="decoration-1 text-blue-500 text-xl" href="#">You should be the first to make one!</a>
+                    </div>
+
+                @endif
 
                 <div class="list mr-2 px-2">
                     @foreach($journeys as $journey)

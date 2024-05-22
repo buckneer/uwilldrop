@@ -49,7 +49,7 @@
         Array.from(toastComponents).forEach((toastComponent) => {
             setTimeout(() => {
                 toastComponent.remove();
-            }, 10000);
+            }, 5000);
         });
     });
 </script>

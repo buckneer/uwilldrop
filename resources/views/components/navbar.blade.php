@@ -45,12 +45,20 @@
                     Management
                 </a>
             </li>
-            <li class="flex items-center px-5 py-3 gap-3 mx-3 my-4 mt-4 rounded-2xl text-muted text-lg transition-all hover:bg-accent {{ Route::is(['billing.index', 'billing.create']) ? 'bg-accent' : '' }} ">
+            <li class="flex items-center px-5 py-3 gap-3 mx-3 mt-4 rounded-2xl text-muted text-lg transition-all hover:bg-accent {{ Route::is(['billing.index', 'billing.create']) ? 'bg-accent' : '' }} ">
                 <x-heroicon-s-credit-card class="w-[20px] text-white " />
                 <a href="{{ route('billing.index') }}" class="nav-link text-white">
                     Billing
                 </a>
             </li>
+            @if(Auth::user()->role == "admin")
+                <li class="flex items-center px-5 py-3 gap-3 mx-3 mt-4 rounded-2xl text-muted text-lg transition-all hover:bg-accent {{ Route::is(['billing.index', 'billing.create']) ? 'bg-accent' : '' }} ">
+                    <x-heroicon-s-user class="w-[20px] text-white" />
+                    <a href="{{ route('admin.index') }}" class="nav-link text-white">
+                        Admin
+                    </a>
+                </li>
+            @endif
         </ul>
     </div>
     <div class="flex items-center px-5 py-3 gap-3 mx-3 my-4 mt-4 rounded-2xl text-muted text-lg transition-all hover:bg-accent">

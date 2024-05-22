@@ -90,6 +90,7 @@ $('#submitBtn').click(function() {
     let date = $("#date").val();
     let seats = $("#seats").val();
     let price = $("#price").val();
+    let template = $("#template").is(":checked");
 
     let startCoordinates = {
         name: fromCoordinates.name,
@@ -109,6 +110,7 @@ $('#submitBtn').click(function() {
         departure_time: date,
         seats: seats,
         price: price,
+        template: template
     };
 
     sendAjaxRequest(data);
@@ -129,6 +131,7 @@ function sendAjaxRequest(data) {
         data: JSON.stringify(data),
         success: function(response) {
             console.log(response);
+            console.log(data);
             showNotification('success', response.message);
         },
         error: function(jqXHR, textStatus, errorThrown) {
