@@ -1,9 +1,26 @@
-<div class="h-[100vh] bg-primary fixed flex flex-col justify-between" style="width: 280px;">
+<div id="navbar" class="w-full bg-primary fixed flex items-center justify-between p-2 z-[100000]">
+    <div class="">
+        <x-heroicon-o-bars-3-bottom-left id="toggleButton" class="w-[30px] text-white" />
+    </div>
+    <a href="/" class="flex justify-center items-center my-5 text-white">
+        <span class="font-black text-xl">U WIll Drop</span>
+    </a>
+    <div class="">
+
+    </div>
+</div>
+
+<div id="sidebar" class="h-[100vh] w-full lg:w-[280px] px-3 bg-primary fixed flex flex-col justify-between z-[100000] overflow-y-auto transition-all">
     <div>
-        <a href="/" class="flex flex-col justify-center items-center my-5 text-white">
-            <span class="font-black text-xl">U WIll Drop</span>
-            <span class="font-black">ADMIN PANEL</span>
-        </a>
+        <div class="flex justify-between lg:justify-center px-2 items-center mt-4">
+            <a href="/" class=" text-white">
+                <span class="font-black text-2xl">U WIll Drop</span>
+
+            </a>
+            <div id="closeSidebar" class="">
+                <x-heroicon-o-x-mark  class="lg:hidden block w-[30px] text-white" />
+            </div>
+        </div>
 
         <a href="#" class="cursor-pointer bg-accent rounded-2xl text-white p-3 m-3 flex justify-between w-100 items-center">
             <div class="flex gap-3 items-center">
@@ -60,4 +77,5 @@
             Log out
         </a>
     </div>
+    @vite('resources/js/navigation.js')
 </div>

@@ -2,7 +2,7 @@
 @section('title', "My Journeys")
 
 @section('content')
-    <div class="flex w-full gap-5">
+    <div class="block lg:flex w-full gap-5">
         <div class="ms-5 flex flex-col h-screen overflow-y-scroll">
             <div class="mt-5">
                 <h1 class="text-2xl font-black ms-2">Active Rides</h1>

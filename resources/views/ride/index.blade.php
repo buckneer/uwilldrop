@@ -4,7 +4,7 @@
 
 
 @section('content')
-    <div class="flex w-full gap-10 h-screen">
+    <div class="block lg:flex w-full gap-10 h-screen">
         <div class="ms-5 flex-1 flex flex-col justify-between pb-5 ">
             <div class="mt-5">
                 <h1 class="text-2xl font-black ms-2">Active rides</h1>

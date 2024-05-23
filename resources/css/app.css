@@ -10,12 +10,25 @@
 body {
     font-family: "Nunito", sans-serif;
     font-optical-sizing: auto;
+    overflow-x: hidden;
 }
 
 
 .dropmenu {
     @apply bg-accent;
 }
+
+
+.sidebar-visible {
+    transition: left 0.3s ease-in-out; /* Adjust duration as needed */
+    z-index: 10000; /* Ensure it's above other content */
+}
+
+.sidebar-hidden {
+    width: 0; /* Adjust based on your sidebar/navbar's width */
+    left: -100px;
+}
+
 
 /*.location {*/
 /*    flex: .2;*/
@@ -75,6 +88,7 @@ body {
 }
 
 
+
 .nav-links nav {
     @apply w-full
 }
@@ -94,42 +108,9 @@ body {
     animation-fill-mode: forwards;
 }
 
-#search_container {
-    position:relative; /* IMPORTANT */
+.autoComplete_wrapper>input {
+    @apply w-full
 }
 
-#search_{
-    border:0; /* HAS TO BE SIMILAR TO #autocomplete */
-    font-size:14px; /* HAS TO BE SIMILAR TO #autocomplete */
-    padding:10px; /* IMPORTANT */
 
-    /* FOR DESIGN PURPOSE */
-    outline:0;
-    color: #f8fafd;
-    width: 100%;
-    border-bottom:1px solid rgba(255,255,255,0.3);
-    background-color: rgba(0,0,0,0);
-    font-family: 'Inconsolata', monospace;
-    /* ================== */
-}
-
-#search_::placeholder {
-    color: #f8fafd; /* FOR DESIGN PURPOSE */
-}
-
-#autocomplete {
-    position: absolute; /* IMPORTANT */
-    z-index: -1; /* IMPORTANT */
-    border:0; /* HAS TO BE SIMILAR TO #search_ */
-    font-size:14px; /* HAS TO BE SIMILAR TO #search_ */
-    left: 10px; /* ACCORDING TO THE LEFT-PADDING OF #search_ */
-    top:10px; /* ACCORDING TO THE TOP-PADDING OF #search_ */
-
-    /* FOR DESIGN PURPOSE */
-    background-color: rgba(0,0,0,0);
-    font-family: 'Inconsolata', monospace;
-    color: rgba(248,250,253,0.4);
-    width: 100%;
-    /* ================== */
-}
 

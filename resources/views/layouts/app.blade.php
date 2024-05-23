@@ -21,6 +21,8 @@
 {{--    SELECT--}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.02.min.css">
+
 
 
 
@@ -125,7 +127,7 @@
             </div>
         </div>
         @include('components.navbar')
-        <div class="ml-[280px] w-full">
+        <div class="ml-0 mt-[80px] lg:mt-0 lg:ml-[280px] w-full">
             @yield('content')
         </div>
 
@@ -160,6 +162,7 @@
             </div>
         </div>
     </div>
+
     <script>
         function showNotification(type, message) {
 

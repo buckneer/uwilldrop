@@ -6,7 +6,11 @@ export default {
         "./resources/**/*.vue",
     ],
     theme: {
+
         extend: {
+            transitionProperty: {
+                'left': 'left',
+            },
             colors: {
                 "primary": '#0f1318',
                 "secondary": '#40A2D8',

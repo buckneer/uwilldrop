@@ -23,14 +23,18 @@
                 </div>
             </div>
         </div>
-        <div class="flex-1 grow flex w-full justify-center items-center relative h-100">
+        <div class="hidden lg:block flex-1 grow flex w-full justify-center items-center relative h-100">
             <div id='map' style='width: 100%; height: 100%;'></div>
-            <button id="book-ride" class="absolute bottom-14 left-[20%] right-[20%] bg-orange-400 rounded-2xl shadow-xl py-2 px-3 flex justify-center text-white font-black cursor-pointer transition-all hover:bg-orange-500 active:shadow-none active:bg-orange-700 disabled:bg-gray-500">
+            <button  class="book-ride absolute bottom-14 left-[20%] right-[20%] bg-orange-400 rounded-2xl shadow-xl py-2 px-3 flex justify-center text-white font-black cursor-pointer transition-all hover:bg-orange-500 active:shadow-none active:bg-orange-700 disabled:bg-gray-500">
                 Book a ride
             </button>
         </div>
 
-
+        <div class="block lg:hidden fixed bottom-14 w-full flex justify-center">
+            <button class="book-ride w-1/2 bottom-14 bg-orange-400 rounded-2xl shadow-xl py-2 px-3 flex justify-center text-white font-black cursor-pointer transition-all hover:bg-orange-500 active:shadow-none active:bg-orange-700 disabled:bg-gray-500">
+                Book a ride
+            </button>
+        </div>
     </div>
 
 
@@ -94,9 +98,9 @@
 
             function updateButtonState() {
                 if (activeJourney) {
-                    $('#book-ride').prop('disabled', false);
+                    $('.book-ride').prop('disabled', false);
                 } else {
-                    $('#book-ride').prop('disabled', true);
+                    $('.book-ride').prop('disabled', true);
                 }
             }
 
@@ -114,7 +118,7 @@
 
 
 
-            $('#book-ride').click(function () {
+            $('.book-ride').click(function () {
 
 
                 let data = {

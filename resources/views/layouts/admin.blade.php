@@ -34,7 +34,7 @@
     </div>
 
     <x-admin-sidebar />
-    <div class="ml-[280px] w-full">
+    <div class="ml-0 mt-[80px] lg:mt-0 lg:ml-[280px] w-full">
         @yield('content')
     </div>
 

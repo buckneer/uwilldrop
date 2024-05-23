@@ -8,24 +8,20 @@
                 <h1 class="mt-2 font-black text-2xl">New Journey</h1>
 
                 <div class="locations flex justify-between gap-4">
-                    <div class="autocomplete-container flex flex-col">
+                    <div class="flex flex-col ">
                         <label>From Location: </label>
-                        <div class="autocomplete relative inline-block">
-                            <input class="form-input" id="from" type="text" name="from" placeholder="From " autocomplete="off">
-                        </div>
+                        <input id="from" class="w-1/2" type="search" dir="ltr" spellcheck=false autocomplete="off" autocapitalize="off" />
                     </div>
 
                     <div class="autocomplete-container  flex flex-col">
                         <label>To Location: </label>
-                        <div class="autocomplete relative inline-block">
-                            <input id="to" class="form-input" type="text" name="to" placeholder="To"  autocomplete="off">
-                        </div>
+                        <input id="to" type="search" dir="ltr" spellcheck=false autocomplete="off" autocapitalize="off" />
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="to">Date</label>
-                    <input class="form-input" type="datetime-local" id="date" name="date" placeholder="Date">
+                <div class="form-group flex flex-col">
+                    <label for="date">Date</label>
+                    <input class="form-input date-form" type="datetime-local" id="date" name="date" placeholder="Date">
                 </div>
                 <div class="group flex justify-between gap-4">
                     <div class="form-group flex flex-col">
@@ -45,15 +41,12 @@
                 <div class="button-container w-full">
                     <button id="submitBtn" class="w-full mt-3 bg-orange-400 rounded-2xl shadow-xl py-2 px-3 flex justify-center text-white font-black cursor-pointer transition-all hover:bg-orange-500 active:shadow-none active:bg-orange-700 disabled:bg-gray-500">Publish</button>
                 </div>
-                @if($routes->empty())
-                    <h1 class="text-muted mt-5">Your templates will appear here</h1>
-                @else
-                    <h1 class="text-muted mt-5">Or select from template</h1>
-                @endif
 
-                <div class="grid grid-cols-3 gap-2">
-
-                    @foreach($routes as $route)
+            </div>
+            <div class="bg-white z-[9999] mt-2 rounded-2xl p-2 shadow mx-5">
+                <h1 class="text-muted mb-2 ms-2">Or select from template</h1>
+                <div class="grid grid-cols-3 gap-2 pb-2">
+                    @forelse($routes as $route)
                         <form method="POST" action="{{ route('route.share') }}">
                             @csrf
                             <input type="hidden" name="journey_id" value="{{ $route->journey->id }}" />
@@ -69,16 +62,18 @@
                             </button>
                         </form>
 
-
-                    @endforeach
+                    @empty
+                        <h1 class="text-muted mt-5">Your templates will appear here</h1>
+                    @endforelse
 
                 </div>
             </div>
+
         </div>
         <div id="journey-add" class="absolute hidden bottom-5 right-5 bg-orange-500 z-[9999] rounded-full p-3 text-white hover:bg-orange-700 transition-all active:scale-90">
             <x-heroicon-o-plus class="w-[40px]" />
         </div>
-        <div class="col-md-6 w-full h-full">
+        <div class="hidden lg:block col-md-6 w-full h-full">
             <div id='map' style='width: 100%; height: 100%;'></div>
         </div>
 
@@ -94,7 +89,9 @@
 
     <script type="text/javascript">
 
+        const accToken = '{{ env("MAPBOX_TOKEN") }}';
         mapboxgl.accessToken = '{{ env("MAPBOX_TOKEN") }}'; // Replace with your Mapbox access token
+
         const map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/willbuckneer/cluzkj8az005a01qp7xh7d1ba',
@@ -110,7 +107,8 @@
             $("#journey-container").fadeIn(500);
             $("#journey-add").fadeOut(500);
         })
+
     </script>
 
-    @vite('resources/js/autocomplete.js')
+
 @endsection
